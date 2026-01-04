@@ -1,332 +1,222 @@
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap');
+/* RESET BÁSICO */
+* { box-sizing: border-box; }
+body, html { 
+    margin: 0; padding: 0; height: 100%; 
+    background: #000; overflow: hidden; 
+    font-family: 'Cinzel', serif;
+}
 
-    /* RESET BÁSICO */
-    * { box-sizing: border-box; }
-    body, html { 
-        margin: 0; padding: 0; height: 100%; 
-        background: #000; overflow: hidden; 
-        font-family: 'Cinzel', serif;
-    }
-
-    :root {
-        /* Cores Originais do Tema */
-        --gold: #c5a059;
-        --gold-metal: linear-gradient(145deg, #8a6d3b, #f3e5ab, #c5a059, #8a6d3b);
-        --fire-glow: #ff6a00;
-        --emerald-mist: rgba(6, 31, 33, 0.8);
-        --line-greek: #c5a059;
-        --line-roman: #a5a5a5;
-        --line-monster: #8b0000;
-        --line-extra: #0047ab;
-        
-        /* Cores de Status */
-        --status-free-gr: #ff9100;
-        --status-free-rm: #9b59b6;
-        --status-free-mn: #8b0000;
-        --status-free-ex: #00c3ff;
-        
-        --status-lock: #a30000;
-        --status-restrict: #0047ab;
-
-        /* Cores do Loader (Restauradas) */
-        --teal-tumblr: #021a1a;
-        --gold-tumblr: #d4af37;
-        --fire-tumblr: #ff4500;
-    }
-
-    /* =========================================
-       CSS DO LOADER (TITANOMAQUIA) - RESTAURADO
-       ========================================= */
-
-    #loader-master {
-        position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-        background: #000; z-index: 99999;
-        display: flex; justify-content: center; align-items: center; overflow: hidden;
-        animation: masterVanish 1.5s ease-in forwards; animation-delay: 20s;
-    }
-
-    #loader-map-container {
-        position: absolute; width: 100%; height: 100%;
-        display: flex; justify-content: center; align-items: center; z-index: 10;
-        animation: fadeOutElement 1s forwards; animation-delay: 13s;
-    }
-
-    #gps-grid {
-        position: absolute; width: 200%; height: 200%;
-        background-image: 
-            linear-gradient(rgba(212, 175, 55, 0.03) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(212, 175, 55, 0.03) 1px, transparent 1px);
-        background-size: 80px 80px;
-        animation: mapScroll 13s ease-in-out forwards; opacity: 0.5;
-    }
-
-    .ley-system { width: 90%; height: 90%; max-width: 900px; z-index: 20; }
-
-    .loader-line {
-        fill: none; stroke: var(--gold-tumblr); stroke-width: 0.8;
-        stroke-dasharray: 1500; stroke-dashoffset: 1500; 
-        filter: drop-shadow(0 0 4px var(--gold-tumblr));
-        animation: drawLine 11s ease-in-out forwards;
-    }
-
-    .loader-point { fill: #000; stroke: var(--gold-tumblr); stroke-width: 2; opacity: 0; animation: fadeIn 1.5s forwards; }
-    .loader-label { font-family: 'Cinzel', serif; fill: var(--gold-tumblr); font-size: 10px; letter-spacing: 2px; opacity: 0; animation: fadeIn 1.5s forwards; }
-
-    #logo-stage {
-        position: absolute; width: 100%; height: 100%; z-index: 100;
-        display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0;
-        animation: showHideLogo 4s forwards; animation-delay: 13s;
-        -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
-    }
-
-    .logo-main { 
-        font-family: 'Cinzel', serif; color: var(--gold-tumblr); 
-        font-size: 3.5rem; letter-spacing: 15px; margin: 0; text-align: center; font-weight: 700;
-        text-shadow: 0 0 10px var(--fire-tumblr), 0 0 2px #000; 
-    }
-
-    .logo-sub { 
-        font-family: 'Cinzel', serif; color: #e2d5b5; font-size: 1.2rem; letter-spacing: 10px; opacity: 1; text-align: center; font-weight: 400;
-        margin-bottom: 10px; text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-    }
-
-    #subway-speed {
-        position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 200; opacity: 0; overflow: hidden;
-        animation: fadeInElement 0.5s forwards; animation-delay: 17s;
-    }
-
-    .streak {
-        position: absolute; width: 200%; height: 100%;
-        background: repeating-linear-gradient(90deg, transparent 0%, transparent 40%, rgba(212, 175, 55, 0.3) 40.5%, transparent 41%);
-        filter: blur(8px); transform: skewX(-20deg);
-        animation: subwayMove 0.1s linear infinite;
-    }
-
-    .nexus-bg {
-        position: absolute; width: 100%; height: 100%;
-        background: radial-gradient(circle at center, var(--teal-tumblr) 0%, #000 100%);
-        z-index: 1;
-    }
-
-    .loader-ember {
-        position: absolute; bottom: -10px; width: 2px; height: 2px;
-        background: var(--gold-tumblr); border-radius: 50%;
-        opacity: 0; box-shadow: 0 0 8px var(--fire-tumblr);
-        animation: emberRise 8s linear infinite; z-index: 5;
-    }
-
-    @keyframes masterVanish { to { opacity: 0; visibility: hidden; pointer-events: none; z-index: -10; } }
-    @keyframes fadeOutElement { to { opacity: 0; visibility: hidden; } }
-    @keyframes fadeInElement { to { opacity: 1; } }
-    @keyframes showHideLogo {
-        0% { opacity: 0; transform: scale(0.9); filter: blur(0px); }
-        20% { opacity: 1; transform: scale(1); filter: blur(0px); }
-        80% { opacity: 1; transform: scale(1); filter: blur(0px); }
-        100% { opacity: 0; transform: scale(1.2); filter: blur(10px); }
-    }
-    @keyframes drawLine { to { stroke-dashoffset: 0; } }
-    @keyframes mapScroll { from { transform: translate(5%, 5%); } to { transform: translate(-5%, -5%); } }
-    @keyframes subwayMove { from { transform: translateX(0) skewX(-20deg); } to { transform: translateX(-50%) skewX(-20deg); } }
-    @keyframes emberRise {
-        0% { transform: translateY(0); opacity: 0; }
-        20% { opacity: 1; }
-        100% { transform: translateY(-110vh) translateX(40px); opacity: 0; }
-    }
-    @keyframes fadeIn { to { opacity: 1; } }
-
-    /* =========================================
-       CSS DO SITE + MODAL (Seu código atualizado)
-       ========================================= */
-
-    .eda-bg-fx { position: fixed; inset: 0; z-index: 1; background: radial-gradient(circle, #082d2f, #000); }
-    .ember {
-        position: absolute; bottom: -10px; width: 2px; height: 2px;
-        background: var(--fire-glow); border-radius: 50%;
-        box-shadow: 0 0 8px var(--fire-glow);
-        animation: rise 8s infinite linear; opacity: 0; pointer-events: none;
-    }
-    @keyframes rise {
-        0% { transform: translateY(0); opacity: 0; }
-        20% { opacity: 0.8; }
-        100% { transform: translateY(-110vh) translateX(40px); opacity: 0; }
-    }
-
-    .eda-nav-rail { position: fixed; left: 3%; top: 50%; transform: translateY(-50%); z-index: 1200; display: flex; gap: 20px; }
-    .rail-line { width: 1px; background: linear-gradient(to bottom, transparent, var(--gold), transparent); opacity: 0.4; }
-    .links-container { display: flex; flex-direction: column; gap: 1.8rem; }
-    .rail-item { text-decoration: none; display: flex; flex-direction: column; transition: 0.4s ease; cursor: pointer; }
-    .r-code { font-size: 8px; color: var(--gold); opacity: 0.5; letter-spacing: 2px; margin-bottom: 2px; }
-    .r-label { font-size: 13px; color: rgba(197, 160, 89, 0.4); letter-spacing: 3px; }
-    .rail-item:hover .r-label { color: var(--gold); text-shadow: 0 0 12px var(--gold); transform: translateX(5px); }
-
-    .eda-main-stage { 
-        position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
-        width: 32%; height: 85vh; z-index: 100; display: flex;
-        box-shadow: -40px 0 60px -20px var(--emerald-mist), 40px 0 60px -20px var(--emerald-mist);
-        transition: 0.6s;
-    }
-    .eda-main-stage:hover { box-shadow: 0 0 50px rgba(255, 106, 0, 0.2), -40px 0 60px -20px var(--emerald-mist), 40px 0 60px -20px var(--emerald-mist); }
-    .pillar { width: 10px; background: linear-gradient(to right, #000, var(--gold), #000); flex-shrink: 0; }
-    .main-viewport { flex-grow: 1; background: rgba(2, 11, 13, 0.88); border-top: 1px solid var(--gold); border-bottom: 1px solid var(--gold); overflow-y: auto; scrollbar-width: none; }
-    .content-wrapper { padding: 50px 12% 70px; }
-
-    .metro-tag { background: var(--gold-metal); padding: 12px; border: 2px solid #000; text-align: center; }
-    .metro-tag h1 { font-size: 20px; color: #000; letter-spacing: 5px; margin: 0; }
-    .title-divider { height: 1px; width: 100%; background: linear-gradient(to right, transparent, var(--gold), transparent); margin: 25px 0 35px 0; opacity: 0.5; }
-
-    .eda-hero { position: relative; border: 1px solid var(--gold); padding: 4px; background: #000; margin-bottom: 40px; }
-    .eda-hero img { width: 100%; display: block; filter: grayscale(0.2); }
-    .metal-shine { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%, rgba(0,0,0,0.4) 100%); pointer-events: none; }
-
-    .module { border: 1px solid rgba(197, 160, 89, 0.3); margin-bottom: 30px; background: rgba(0, 0, 0, 0.5); box-shadow: inset 0 0 20px rgba(0,0,0,0.8); }
-    .m-header { background: var(--gold-metal); padding: 8px 15px; font-size: 16px; font-weight: 700; color: #000; }
-    .m-body { padding: 20px 25px; font-size: 11px; color: #e2d5b5; line-height: 1.8; text-align: justify; }
-
-    .eda-omega-trigger { position: fixed; top: 70px; right: 50px; z-index: 1500; font-size: 5rem; color: var(--gold); text-decoration: none; text-shadow: 0 0 20px var(--gold); transition: 0.4s; }
-
-    /* --- CSS DO NOVO MODAL COM NAVEGAÇÃO --- */
+:root {
+    /* Cores Originais do Tema */
+    --gold: #c5a059;
+    --gold-metal: linear-gradient(145deg, #8a6d3b, #f3e5ab, #c5a059, #8a6d3b);
+    --fire-glow: #ff6a00;
+    --emerald-mist: rgba(6, 31, 33, 0.8);
+    --line-greek: #c5a059;
+    --line-roman: #a5a5a5;
+    --line-monster: #8b0000;
+    --line-extra: #0047ab;
     
-    .eda-modal-overlay { 
-        position: fixed; inset: 0; z-index: 2000; 
-        background: rgba(0,0,0,0.6); display: none; 
-        align-items: center; justify-content: center; backdrop-filter: blur(12px); 
-    }
-    #terminal:target { display: flex; }
-
-    .eda-modal-container { 
-        width: 45%; height: 55vh; 
-        display: flex; border: 1px solid var(--gold); 
-        background: rgba(2, 11, 13, 0.96); box-shadow: 0 0 80px rgba(0,0,0,0.9);
-        position: relative; overflow: hidden;
-    }
-
-    .modal-pane { 
-        width: 100%; height: 100%; 
-        position: relative; 
-    }
-
-    .close-overlay { position: absolute; inset: 0; cursor: default; z-index: -1; }
-    .exit-anchor { position: absolute; top: 15px; right: 20px; color: var(--gold); text-decoration: none; font-size: 10px; letter-spacing: 2px; opacity: 0.5; z-index: 50; }
-    .exit-anchor:hover { opacity: 1; }
-
-    /* --- LÓGICA DE ABAS SEM JS --- */
-    .nav-trigger { display: none; }
-
-    /* Configuração das Telas */
-    .view-screen {
-        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-        padding: 30px 40px; 
-        display: flex; flex-direction: column;
-        opacity: 0; visibility: hidden; 
-        transform: translateX(30px); transition: all 0.4s ease;
-        pointer-events: none;
-    }
-
-    /* Ativação das Telas */
-    #show-menu:checked ~ .modal-pane #screen-menu,
-    #show-greek:checked ~ .modal-pane #screen-greek,
-    #show-roman:checked ~ .modal-pane #screen-roman,
-    #show-monster:checked ~ .modal-pane #screen-monster,
-    #show-extra:checked ~ .modal-pane #screen-extra {
-        opacity: 1; visibility: visible; 
-        transform: translateX(0); pointer-events: all; z-index: 10;
-    }
-
-    /* Menu Principal */
-    .screen-title { color: var(--gold); letter-spacing: 4px; font-size: 16px; margin-bottom: 25px; text-align: center; margin-top: 10px; }
-
-    .metro-line {
-        width: 100%; max-width: 380px; padding: 15px 20px; margin: 8px auto; 
-        border: 1px solid rgba(255,255,255,0.05); cursor: pointer;
-        display: flex; align-items: center; justify-content: space-between;
-        background: rgba(255,255,255,0.02); transition: 0.3s ease;
-    }
-    .metro-line.greek { border-left: 5px solid var(--line-greek); } .metro-line.greek .line-status { color: var(--line-greek); }
-    .metro-line.roman { border-left: 5px solid var(--line-roman); } .metro-line.roman .line-status { color: var(--line-roman); }
-    .metro-line.monster { border-left: 5px solid var(--line-monster); } .metro-line.monster .line-status { color: var(--line-monster); }
-    .metro-line.extra { border-left: 5px solid var(--line-extra); } .metro-line.extra .line-status { color: var(--line-extra); }
+    /* Cores de Status */
+    --status-free-gr: #ff9100;
+    --status-free-rm: #9b59b6;
+    --status-free-mn: #8b0000;
+    --status-free-ex: #00c3ff;
     
-    .metro-line:hover { background: rgba(255,255,255,0.08); transform: translateX(8px); border-color: rgba(197, 160, 89, 0.4); }
-    .arrow-icon { font-size: 12px; color: var(--gold); opacity: 0.4; }
-    .metro-line:hover .arrow-icon { opacity: 1; transform: translateX(3px); }
+    --status-lock: #a30000;
+    --status-restrict: #0047ab;
+}
+
+/* =========================================
+   CSS DO SITE (PRINCIPAL)
+   ========================================= */
+
+.eda-bg-fx { position: fixed; inset: 0; z-index: 1; background: radial-gradient(circle, #082d2f, #000); }
+.ember {
+    position: absolute; bottom: -10px; width: 2px; height: 2px;
+    background: var(--fire-glow); border-radius: 50%;
+    box-shadow: 0 0 8px var(--fire-glow);
+    animation: rise 8s infinite linear; opacity: 0; pointer-events: none;
+}
+@keyframes rise {
+    0% { transform: translateY(0); opacity: 0; }
+    20% { opacity: 0.8; }
+    100% { transform: translateY(-110vh) translateX(40px); opacity: 0; }
+}
+
+.eda-nav-rail { position: fixed; left: 3%; top: 50%; transform: translateY(-50%); z-index: 1200; display: flex; gap: 20px; }
+.rail-line { width: 1px; background: linear-gradient(to bottom, transparent, var(--gold), transparent); opacity: 0.4; }
+.links-container { display: flex; flex-direction: column; gap: 1.8rem; }
+.rail-item { text-decoration: none; display: flex; flex-direction: column; transition: 0.4s ease; cursor: pointer; }
+.r-code { font-size: 8px; color: var(--gold); opacity: 0.5; letter-spacing: 2px; margin-bottom: 2px; }
+.r-label { font-size: 13px; color: rgba(197, 160, 89, 0.4); letter-spacing: 3px; }
+.rail-item:hover .r-label { color: var(--gold); text-shadow: 0 0 12px var(--gold); transform: translateX(5px); }
+
+.eda-main-stage { 
+    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+    width: 32%; height: 85vh; z-index: 100; display: flex;
+    box-shadow: -40px 0 60px -20px var(--emerald-mist), 40px 0 60px -20px var(--emerald-mist);
+    transition: 0.6s;
+}
+.eda-main-stage:hover { box-shadow: 0 0 50px rgba(255, 106, 0, 0.2), -40px 0 60px -20px var(--emerald-mist), 40px 0 60px -20px var(--emerald-mist); }
+.pillar { width: 10px; background: linear-gradient(to right, #000, var(--gold), #000); flex-shrink: 0; }
+.main-viewport { flex-grow: 1; background: rgba(2, 11, 13, 0.88); border-top: 1px solid var(--gold); border-bottom: 1px solid var(--gold); overflow-y: auto; scrollbar-width: none; }
+.content-wrapper { padding: 50px 12% 70px; }
+
+.metro-tag { background: var(--gold-metal); padding: 12px; border: 2px solid #000; text-align: center; }
+.metro-tag h1 { font-size: 20px; color: #000; letter-spacing: 5px; margin: 0; }
+.title-divider { height: 1px; width: 100%; background: linear-gradient(to right, transparent, var(--gold), transparent); margin: 25px 0 35px 0; opacity: 0.5; }
+
+.eda-hero { position: relative; border: 1px solid var(--gold); padding: 4px; background: #000; margin-bottom: 40px; }
+.eda-hero img { width: 100%; display: block; filter: grayscale(0.2); }
+.metal-shine { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%, rgba(0,0,0,0.4) 100%); pointer-events: none; }
+
+.module { border: 1px solid rgba(197, 160, 89, 0.3); margin-bottom: 30px; background: rgba(0, 0, 0, 0.5); box-shadow: inset 0 0 20px rgba(0,0,0,0.8); }
+.m-header { background: var(--gold-metal); padding: 8px 15px; font-size: 16px; font-weight: 700; color: #000; }
+.m-body { padding: 20px 25px; font-size: 11px; color: #e2d5b5; line-height: 1.8; text-align: justify; }
+
+.eda-omega-trigger { position: fixed; top: 70px; right: 50px; z-index: 1500; font-size: 5rem; color: var(--gold); text-decoration: none; text-shadow: 0 0 20px var(--gold); transition: 0.4s; }
+
+/* --- CSS DO MODAL COM NAVEGAÇÃO --- */
+
+.eda-modal-overlay { 
+    position: fixed; inset: 0; z-index: 2000; 
+    background: rgba(0,0,0,0.6); display: none; 
+    align-items: center; justify-content: center; backdrop-filter: blur(12px); 
+}
+#terminal:target { display: flex; }
+
+.eda-modal-container { 
+    width: 45%; height: 55vh; 
+    display: flex; border: 1px solid var(--gold); 
+    background: rgba(2, 11, 13, 0.96); box-shadow: 0 0 80px rgba(0,0,0,0.9);
+    position: relative; overflow: hidden;
+}
+
+.modal-pane { 
+    width: 100%; height: 100%; 
+    position: relative; 
+}
+
+.close-overlay { position: absolute; inset: 0; cursor: default; z-index: -1; }
+.exit-anchor { position: absolute; top: 15px; right: 20px; color: var(--gold); text-decoration: none; font-size: 10px; letter-spacing: 2px; opacity: 0.5; z-index: 50; }
+.exit-anchor:hover { opacity: 1; }
+
+/* --- LÓGICA DE ABAS SEM JS --- */
+.nav-trigger { display: none; }
+
+/* Configuração das Telas */
+.view-screen {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    padding: 30px 40px; 
+    display: flex; flex-direction: column;
+    opacity: 0; visibility: hidden; 
+    transform: translateX(30px); transition: all 0.4s ease;
+    pointer-events: none;
+}
+
+/* Ativação das Telas */
+#show-menu:checked ~ .modal-pane #screen-menu,
+#show-greek:checked ~ .modal-pane #screen-greek,
+#show-roman:checked ~ .modal-pane #screen-roman,
+#show-monster:checked ~ .modal-pane #screen-monster,
+#show-extra:checked ~ .modal-pane #screen-extra {
+    opacity: 1; visibility: visible; 
+    transform: translateX(0); pointer-events: all; z-index: 10;
+}
+
+/* Menu Principal */
+.screen-title { color: var(--gold); letter-spacing: 4px; font-size: 16px; margin-bottom: 25px; text-align: center; margin-top: 10px; }
+
+.metro-line {
+    width: 100%; max-width: 380px; padding: 15px 20px; margin: 8px auto; 
+    border: 1px solid rgba(255,255,255,0.05); cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(255,255,255,0.02); transition: 0.3s ease;
+}
+.metro-line.greek { border-left: 5px solid var(--line-greek); } .metro-line.greek .line-status { color: var(--line-greek); }
+.metro-line.roman { border-left: 5px solid var(--line-roman); } .metro-line.roman .line-status { color: var(--line-roman); }
+.metro-line.monster { border-left: 5px solid var(--line-monster); } .metro-line.monster .line-status { color: var(--line-monster); }
+.metro-line.extra { border-left: 5px solid var(--line-extra); } .metro-line.extra .line-status { color: var(--line-extra); }
+
+.metro-line:hover { background: rgba(255,255,255,0.08); transform: translateX(8px); border-color: rgba(197, 160, 89, 0.4); }
+.arrow-icon { font-size: 12px; color: var(--gold); opacity: 0.4; }
+.metro-line:hover .arrow-icon { opacity: 1; transform: translateX(3px); }
+
+.line-info { display: flex; flex-direction: column; }
+.line-name { font-size: 13px; letter-spacing: 3px; color: #fff; text-transform: uppercase; }
+.line-status { font-size: 8px; letter-spacing: 1px; margin-top: 4px; opacity: 0.8; }
+
+/* --- UI DAS LISTAS E LEGENDAS --- */
+.list-header { 
+    display: flex; align-items: center; justify-content: space-between; 
+    border-bottom: 1px solid rgba(197,160,89,0.2); padding-bottom: 10px; margin-bottom: 10px; 
+    flex-shrink: 0;
+}
+.back-btn { font-size: 10px; color: #fff; cursor: pointer; opacity: 0.6; letter-spacing: 2px; transition: 0.3s; }
+.back-btn:hover { color: var(--gold); opacity: 1; }
+.sub-title { font-size: 14px; letter-spacing: 3px; margin: 0; }
+
+/* Container que ocupa o espaço restante sem scroll */
+.gods-grid-container {
+    flex-grow: 1; 
+    overflow-y: auto; /* Alterado para permitir scroll se a fonte crescer muito */
+    overflow-x: hidden;
+    margin-bottom: 10px;
+    display: flex; flex-direction: column; 
+    scrollbar-width: none; /* Firefox: esconde barra */
+}
+.gods-grid-container::-webkit-scrollbar { display: none; /* Chrome: esconde barra */ }
+
+.gods-grid {
+    display: grid; 
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 5px; 
+}
+
+/* --- MODIFICADOR PARA 2 COLUNAS (Monstros e Extras) --- */
+.gods-grid.two-cols {
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 10px;
+}
+
+.god-item {
+    display: block; /* Comportamento de bloco para o link */
+    text-decoration: none; /* Remove sublinhado */
+    font-size: 11px; /* AUMENTADO de 9px para 11px */
     
-    .line-info { display: flex; flex-direction: column; }
-    .line-name { font-size: 13px; letter-spacing: 3px; color: #fff; text-transform: uppercase; }
-    .line-status { font-size: 8px; letter-spacing: 1px; margin-top: 4px; opacity: 0.8; }
-
-    /* --- UI DAS LISTAS E LEGENDAS --- */
-    .list-header { 
-        display: flex; align-items: center; justify-content: space-between; 
-        border-bottom: 1px solid rgba(197,160,89,0.2); padding-bottom: 10px; margin-bottom: 10px; 
-        flex-shrink: 0;
-    }
-    .back-btn { font-size: 10px; color: #fff; cursor: pointer; opacity: 0.6; letter-spacing: 2px; transition: 0.3s; }
-    .back-btn:hover { color: var(--gold); opacity: 1; }
-    .sub-title { font-size: 14px; letter-spacing: 3px; margin: 0; }
-
-    /* Container que ocupa o espaço restante sem scroll */
-    .gods-grid-container {
-        flex-grow: 1; 
-        overflow-y: auto; /* Alterado para permitir scroll se a fonte crescer muito */
-        overflow-x: hidden;
-        margin-bottom: 10px;
-        display: flex; flex-direction: column; 
-        scrollbar-width: none; /* Firefox: esconde barra */
-    }
-    .gods-grid-container::-webkit-scrollbar { display: none; /* Chrome: esconde barra */ }
-
-    .gods-grid {
-        display: grid; 
-        grid-template-columns: repeat(4, 1fr); 
-        gap: 5px; 
-    }
-
-    /* --- MODIFICADOR PARA 2 COLUNAS (Monstros e Extras) --- */
-    .gods-grid.two-cols {
-        grid-template-columns: repeat(2, 1fr); 
-        gap: 10px;
-    }
-
-    .god-item {
-        display: block; /* Comportamento de bloco para o link */
-        text-decoration: none; /* Remove sublinhado */
-        font-size: 11px; /* AUMENTADO de 9px para 11px */
-        
-        color: #e2d5b5; background: rgba(255,255,255,0.03);
-        padding: 8px 4px; /* Ajuste leve no padding */
-        
-        text-align: center; border: 1px solid transparent; transition: 0.3s;
-        position: relative; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-        cursor: pointer;
-    }
-    .god-item:hover {
-        background: rgba(197, 160, 89, 0.1); border-color: rgba(197, 160, 89, 0.4); color: #fff;
-    }
-
-    /* --- INDICADORES DE STATUS (UI) --- */
-    .status-free-gr { border-left: 2px solid var(--status-free-gr) !important; }
-    .status-free-rm { border-left: 2px solid var(--status-free-rm) !important; }
-    .status-free-mn { border-left: 2px solid var(--status-lock) !important; }
-    .status-free-ex { border-left: 2px solid var(--status-free-ex) !important; }
+    color: #e2d5b5; background: rgba(255,255,255,0.03);
+    padding: 8px 4px; /* Ajuste leve no padding */
     
-    .status-lock { border-left: 2px solid var(--status-lock) !important; }
-    .status-restrict { border-left: 2px solid var(--status-restrict) !important; }
+    text-align: center; border: 1px solid transparent; transition: 0.3s;
+    position: relative; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    cursor: pointer;
+}
+.god-item:hover {
+    background: rgba(197, 160, 89, 0.1); border-color: rgba(197, 160, 89, 0.4); color: #fff;
+}
 
-    /* --- LEGENDA --- */
-    .legend-bar {
-        display: flex; justify-content: center; gap: 20px;
-        padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.05);
-        font-size: 9px; letter-spacing: 1px; color: rgba(255,255,255,0.6);
-        flex-shrink: 0;
-    }
-    .legend-item { display: flex; align-items: center; gap: 6px; }
-    .dot { width: 6px; height: 6px; border-radius: 50%; }
-    
-    .bg-orange { background: var(--status-free-gr); box-shadow: 0 0 5px var(--status-free-gr); }
-    .bg-purple { background: var(--status-free-rm); box-shadow: 0 0 5px var(--status-free-rm); }
-    .bg-cyan { background: var(--status-free-ex); box-shadow: 0 0 5px var(--status-free-ex); }
-    .bg-red { background: var(--status-lock); box-shadow: 0 0 5px var(--status-lock); }
-    .bg-blue { background: var(--status-restrict); box-shadow: 0 0 5px var(--status-restrict); }
+/* --- INDICADORES DE STATUS (UI) --- */
+.status-free-gr { border-left: 2px solid var(--status-free-gr) !important; }
+.status-free-rm { border-left: 2px solid var(--status-free-rm) !important; }
+.status-free-mn { border-left: 2px solid var(--status-lock) !important; }
+.status-free-ex { border-left: 2px solid var(--status-free-ex) !important; }
 
-</style>
+.status-lock { border-left: 2px solid var(--status-lock) !important; }
+.status-restrict { border-left: 2px solid var(--status-restrict) !important; }
+
+/* --- LEGENDA --- */
+.legend-bar {
+    display: flex; justify-content: center; gap: 20px;
+    padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.05);
+    font-size: 9px; letter-spacing: 1px; color: rgba(255,255,255,0.6);
+    flex-shrink: 0;
+}
+.legend-item { display: flex; align-items: center; gap: 6px; }
+.dot { width: 6px; height: 6px; border-radius: 50%; }
+
+.bg-orange { background: var(--status-free-gr); box-shadow: 0 0 5px var(--status-free-gr); }
+.bg-purple { background: var(--status-free-rm); box-shadow: 0 0 5px var(--status-free-rm); }
+.bg-cyan { background: var(--status-free-ex); box-shadow: 0 0 5px var(--status-free-ex); }
+.bg-red { background: var(--status-lock); box-shadow: 0 0 5px var(--status-lock); }
+.bg-blue { background: var(--status-restrict); box-shadow: 0 0 5px var(--status-restrict); }
