@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap');
+
 /* RESET BÁSICO */
 * { box-sizing: border-box; }
 body, html { 
@@ -108,7 +110,7 @@ body, html {
 /* Configuração das Telas */
 .view-screen {
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    padding: 30px 40px; 
+    padding: 45px 40px 30px; /* AUMENTADO O TOPO DE 30px PARA 45px */
     display: flex; flex-direction: column;
     opacity: 0; visibility: hidden; 
     transform: translateX(30px); transition: all 0.4s ease;
@@ -147,26 +149,41 @@ body, html {
 .line-name { font-size: 13px; letter-spacing: 3px; color: #fff; text-transform: uppercase; }
 .line-status { font-size: 8px; letter-spacing: 1px; margin-top: 4px; opacity: 0.8; }
 
-/* --- UI DAS LISTAS E LEGENDAS --- */
+/* --- UI DAS LISTAS E LEGENDAS (CORRIGIDO) --- */
 .list-header { 
-    display: flex; align-items: center; justify-content: space-between; 
-    border-bottom: 1px solid rgba(197,160,89,0.2); padding-bottom: 10px; margin-bottom: 10px; 
+    position: relative; /* CRÍTICO PARA FUNCIONAR */
+    display: flex; 
+    align-items: center; 
+    justify-content: center; /* AGORA CENTRALIZA O TÍTULO */
+    border-bottom: 1px solid rgba(197,160,89,0.2); 
+    padding-bottom: 10px; 
+    margin-bottom: 10px; 
     flex-shrink: 0;
+    min-height: 25px;
 }
-.back-btn { font-size: 10px; color: #fff; cursor: pointer; opacity: 0.6; letter-spacing: 2px; transition: 0.3s; }
+.back-btn { 
+    position: absolute; /* FIXO NA ESQUERDA */
+    left: 0;
+    font-size: 10px; 
+    color: #fff; 
+    cursor: pointer; 
+    opacity: 0.6; 
+    letter-spacing: 2px; 
+    transition: 0.3s; 
+}
 .back-btn:hover { color: var(--gold); opacity: 1; }
-.sub-title { font-size: 14px; letter-spacing: 3px; margin: 0; }
+.sub-title { font-size: 14px; letter-spacing: 3px; margin: 0; text-align: center; }
 
 /* Container que ocupa o espaço restante sem scroll */
 .gods-grid-container {
     flex-grow: 1; 
-    overflow-y: auto; /* Alterado para permitir scroll se a fonte crescer muito */
+    overflow-y: auto; 
     overflow-x: hidden;
     margin-bottom: 10px;
     display: flex; flex-direction: column; 
-    scrollbar-width: none; /* Firefox: esconde barra */
+    scrollbar-width: none; 
 }
-.gods-grid-container::-webkit-scrollbar { display: none; /* Chrome: esconde barra */ }
+.gods-grid-container::-webkit-scrollbar { display: none; }
 
 .gods-grid {
     display: grid; 
@@ -181,12 +198,12 @@ body, html {
 }
 
 .god-item {
-    display: block; /* Comportamento de bloco para o link */
-    text-decoration: none; /* Remove sublinhado */
-    font-size: 11px; /* AUMENTADO de 9px para 11px */
+    display: block; 
+    text-decoration: none; 
+    font-size: 11px; 
     
     color: #e2d5b5; background: rgba(255,255,255,0.03);
-    padding: 8px 4px; /* Ajuste leve no padding */
+    padding: 8px 4px; 
     
     text-align: center; border: 1px solid transparent; transition: 0.3s;
     position: relative; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
