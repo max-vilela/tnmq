@@ -125,8 +125,9 @@
     #terminal:target { display: flex; }
 
     .eda-modal-container { 
-        width: 55%; 
-        height: 85vh; /* AUMENTADO PARA 85vh PARA EVITAR CORTES */
+        width: 45%; 
+        max-width: 650px;
+        height: 80vh; 
         display: flex; border: 1px solid var(--gold); 
         background: rgba(2, 11, 13, 0.98); box-shadow: 0 0 80px rgba(0,0,0,0.9);
         position: relative; overflow: hidden;
@@ -207,15 +208,31 @@
     .gods-grid-container::-webkit-scrollbar-track { background: rgba(0,0,0,0.3); }
     .gods-grid-container::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
 
-    .gods-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-    .gods-grid.two-cols { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-
+    .gods-grid { 
+        display: grid; 
+        grid-template-columns: repeat(4, 1fr); 
+        gap: 8px; /* Aumentado o espaço entre eles */
+    }
+.gods-grid.two-cols { 
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 15px; 
+    }
     .god-item {
-        display: block; text-decoration: none; 
-        font-size: 14px; color: #ffecd1; background: rgba(255,255,255,0.05); padding: 10px 5px; 
-        text-align: center; border: 1px solid transparent; transition: 0.3s;
-        position: relative; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-        cursor: pointer; font-weight: 600;
+        display: flex; /* Mudado para flex para centralizar melhor */
+        align-items: center; 
+        justify-content: center;
+        text-decoration: none; 
+        font-size: 13px; 
+        color: #ffecd1; 
+        background: rgba(255,255,255,0.05); 
+        padding: 12px 4px; /* Mais altura (12px) para não parecer uma tira fina */
+        border: 1px solid transparent; 
+        transition: 0.3s;
+        position: relative; 
+        overflow: hidden; 
+        cursor: pointer; 
+        font-weight: 600;
+        line-height: 1.2; /* Melhora caso o nome quebre em duas linhas */
     }
     .god-item:hover { background: rgba(220, 179, 99, 0.2); border-color: var(--gold); color: #fff; }
 
@@ -302,6 +319,7 @@
         left: -9999px !important;
     }
 </style>
+
 
 
 
