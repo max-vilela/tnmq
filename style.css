@@ -113,7 +113,29 @@
     .eda-hero img { width: 100%; display: block; filter: grayscale(0.1); }
     .metal-shine { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%, rgba(0,0,0,0.4) 100%); pointer-events: none; }
 
-    /* Botão Legados */
+    /* Botoões Container  */
+    .button-row {
+    display: flex;           
+    justify-content: space-between; 
+    
+    gap: 20px;           
+    width: 100%;             
+    margin-top: 20px;        
+}
+
+
+.button-row .metro-tag {
+    flex: 1;                 
+    text-align: center;    
+    cursor: pointer;         
+    transition: 0.3s;       
+}
+
+.button-row .metro-tag:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(220, 179, 99, 0.4); 
+}
+
     .button-area { display: flex; justify-content: center; margin-bottom: 30px; }
     .btn-legacy {
         text-decoration: none; color: #000; background: var(--gold-metal);
@@ -310,6 +332,7 @@
     iframe[src*="tumblr"], iframe[src*="analytics"], iframe[src*="monetization"] { display: none !important; visibility: hidden !important; opacity: 0 !important; width: 0 !important; height: 0 !important; }
     #ga_target, #blue-space-api-calls-iframe, noscript img[style*="position:absolute"] { display: none !important; visibility: hidden !important; opacity: 0 !important; width: 0 !important; height: 0 !important; position: absolute !important; left: -9999px !important; }
 </style>
+
 
 
 
