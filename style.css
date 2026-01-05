@@ -336,6 +336,36 @@
     .bg-red { background: var(--status-lock); box-shadow: 0 0 8px var(--status-lock); }
     .bg-blue { background: var(--status-restrict); box-shadow: 0 0 8px var(--status-restrict); }
 
-    /* Esconder elementos do Tumblr */
-    iframe.tmblr-iframe { display: none !important; }
+    /* Remover elementos do Tumblr */
+    .tmblr-iframe {
+        display: none !important;
+    }
+
+    .tmblr-iframe--controls,
+    .tmblr-iframe--follow {
+        display: none !important;
+    }
+
+    iframe[src*="tumblr"],
+    iframe[src*="analytics"],
+    iframe[src*="monetization"] {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        width: 0 !important;
+        height: 0 !important;
+    }
+
+    #ga_target,
+    #blue-space-api-calls-iframe,
+    noscript img[style*="position:absolute"] {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        width: 0 !important;
+        height: 0 !important;
+        position: absolute !important;
+        left: -9999px !important;
+    }
 </style>
+
