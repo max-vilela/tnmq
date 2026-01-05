@@ -5,6 +5,7 @@
     
     /* --- IMPORTAÇÃO DAS FONTES --- */
     @import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap'); /* Adicionei Cinzel que estava faltando para o Loader */
 
     * { box-sizing: border-box; }
     
@@ -114,7 +115,7 @@
     .eda-omega-trigger { position: fixed; top: 70px; right: 50px; z-index: 1500; font-size: 5rem; color: var(--gold); text-decoration: none; text-shadow: 0 0 20px var(--gold); transition: 0.4s; }
 
     /* =========================================
-       CSS DO MODAL (CORRIGIDO PARA NÃO CORTAR)
+       CSS DO MODAL (CORRIGIDO FINAL)
        ========================================= */
     
     .eda-modal-overlay { 
@@ -126,7 +127,8 @@
 
     .eda-modal-container { 
         width: 55%; 
-        height: 85vh; 
+        /* ALTERADO: Altura reduzida para 60vh para remover o espaço vazio excessivo */
+        height: 60vh; 
         display: flex; border: 1px solid var(--gold); 
         background: rgba(2, 11, 13, 0.98); box-shadow: 0 0 80px rgba(0,0,0,0.9);
         position: relative; overflow: hidden;
@@ -142,7 +144,8 @@
     
     .view-screen {
         position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-        padding: 20px 40px 25px 40px; 
+        /* ALTERADO: Padding ajustado para balancear topo/rodapé */
+        padding: 30px 40px 10px 40px; 
         display: flex; flex-direction: column;
         opacity: 0; visibility: hidden; 
         transform: translateX(30px); transition: all 0.4s ease;
@@ -191,15 +194,15 @@
     .back-btn:hover { color: var(--gold); opacity: 1; }
     .sub-title { font-size: 18px; letter-spacing: 3px; margin: 0; text-align: center; font-weight: 800; }
 
-    /* CORREÇÃO DO SCROLL E LEGENDA */
+    /* CORREÇÃO DO SCROLL E FLEXBOX */
     .gods-grid-container {
-        flex-grow: 1; 
+        flex-grow: 1; /* Ocupa todo o espaço disponível */
         overflow-y: auto; 
         overflow-x: hidden;
-        min-height: 0; /* Essencial para o scroll funcionar dentro do Flex */
+        min-height: 0; /* ESSENCIAL PARA O SCROLL FUNCIONAR */
         margin-bottom: 10px;
         display: flex; flex-direction: column; 
-        padding-right: 5px; /* Espaço para não colar na barra de rolagem */
+        padding-right: 5px;
         scrollbar-width: thin; 
         scrollbar-color: var(--gold) rgba(0,0,0,0.3);
     }
@@ -233,10 +236,10 @@
         display: flex; justify-content: center; gap: 25px;
         padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);
         font-size: 11px; letter-spacing: 1px; color: rgba(255,255,255,0.8);
-        flex-shrink: 0; /* Garante que a legenda não encolha */
+        flex-shrink: 0; /* Garante que a legenda não suma */
         font-weight: 600;
-        margin-top: auto; /* Empurra para o final do container */
-        min-height: 40px; /* Altura mínima de segurança */
+        margin-top: auto; /* Empurra para o rodapé do container */
+        min-height: 40px;
     }
     .legend-item { display: flex; align-items: center; gap: 8px; }
     .dot { width: 8px; height: 8px; border-radius: 50%; }
@@ -247,8 +250,7 @@
     .bg-red { background: var(--status-lock); box-shadow: 0 0 8px var(--status-lock); }
     .bg-blue { background: var(--status-restrict); box-shadow: 0 0 8px var(--status-restrict); }
 
-    /* Loader CSS (Omitido para poupar espaço, mantenha o original se necessário ou adicione aqui) */
-    /* ... CSS do Loader aqui ... */
+    /* --- LOADER --- */
     #loader-master { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000; z-index: 99999; display: flex; justify-content: center; align-items: center; overflow: hidden; animation: masterVanish 1.5s ease-in forwards; animation-delay: 20s; }
     #loader-map-container { position: absolute; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; z-index: 10; animation: fadeOutElement 1s forwards; animation-delay: 13s; }
     #gps-grid { position: absolute; width: 200%; height: 200%; background-image: linear-gradient(rgba(212, 175, 55, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(212, 175, 55, 0.03) 1px, transparent 1px); background-size: 80px 80px; animation: mapScroll 13s ease-in-out forwards; opacity: 0.5; }
@@ -263,6 +265,7 @@
     .streak { position: absolute; width: 200%; height: 100%; background: repeating-linear-gradient(90deg, transparent 0%, transparent 40%, rgba(212, 175, 55, 0.3) 40.5%, transparent 41%); filter: blur(8px); transform: skewX(-20deg); animation: subwayMove 0.1s linear infinite; }
     .nexus-bg { position: absolute; width: 100%; height: 100%; background: radial-gradient(circle at center, var(--teal-tumblr) 0%, #000 100%); z-index: 1; }
     .loader-ember { position: absolute; bottom: -10px; width: 2px; height: 2px; background: var(--gold-tumblr); border-radius: 50%; opacity: 0; box-shadow: 0 0 8px var(--fire-tumblr); animation: emberRise 8s linear infinite; z-index: 5; }
+    
     @keyframes masterVanish { to { opacity: 0; visibility: hidden; pointer-events: none; z-index: -10; } }
     @keyframes fadeOutElement { to { opacity: 0; visibility: hidden; } }
     @keyframes fadeInElement { to { opacity: 1; } }
@@ -273,36 +276,8 @@
     @keyframes emberRise { 0% { transform: translateY(0); opacity: 0; } 20% { opacity: 1; } 100% { transform: translateY(-110vh) translateX(40px); opacity: 0; } }
     @keyframes fadeIn { to { opacity: 1; } }
 
-        /* Remover elementos do Tumblr */
-    .tmblr-iframe {
-        display: none !important;
-    }
-
-    .tmblr-iframe--controls,
-    .tmblr-iframe--follow {
-        display: none !important;
-    }
-
-    iframe[src*="tumblr"],
-    iframe[src*="analytics"],
-    iframe[src*="monetization"] {
-        display: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-        width: 0 !important;
-        height: 0 !important;
-    }
-
-    #ga_target,
-    #blue-space-api-calls-iframe,
-    noscript img[style*="position:absolute"] {
-        display: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-        width: 0 !important;
-        height: 0 !important;
-        position: absolute !important;
-        left: -9999px !important;
-    }
+    /* Remover elementos do Tumblr */
+    .tmblr-iframe, .tmblr-iframe--controls, .tmblr-iframe--follow { display: none !important; }
+    iframe[src*="tumblr"], iframe[src*="analytics"], iframe[src*="monetization"] { display: none !important; visibility: hidden !important; opacity: 0 !important; width: 0 !important; height: 0 !important; }
+    #ga_target, #blue-space-api-calls-iframe, noscript img[style*="position:absolute"] { display: none !important; visibility: hidden !important; opacity: 0 !important; width: 0 !important; height: 0 !important; position: absolute !important; left: -9999px !important; }
 </style>
-
