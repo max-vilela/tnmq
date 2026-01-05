@@ -116,42 +116,39 @@
     /* Botoões Container  */
     .button-row {
     display: flex;
-    gap: 20px; /* O espaço entre eles */
+    gap: 20px;
     justify-content: space-between;
     width: 100%;
     margin-top: 20px;
-    }
+    margin-bottom: 35px;
+}
 
+.metro-btn {
+    flex: 1;
+    display: block;
+    padding: 12px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.4); 
+    border: 1px solid var(--gold);  
+    text-decoration: none !important;
+    color: var(--gold) !important;
+    
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;   
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    
+    transition: all 0.4s ease; 
+}
 
-    .metro-btn {
-        
-        flex: 1; 
-        display: block;
-        padding: 12px;
-        text-align: center;
-        
-        
-        background: var(--gold-metal);
-        border: 2px solid #000;
-        
-        
-        text-decoration: none !important; 
-        color: #000 !important;           
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 18px;     
-        font-weight: 800;    /
-        letter-spacing: 3px; 
-        text-transform: uppercase;
-        
-
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .metro-btn:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 5px 20px rgba(220, 179, 99, 0.4);
-        background: #e2c070; 
-    }
+.metro-btn:hover {
+    background: var(--gold-metal);   
+    color: #000 !important;        
+    border-color: var(--gold);
+    box-shadow: 0 0 20px rgba(220, 179, 99, 0.3); 
+    transform: translateY(-2px);
+}
 
     .button-area { display: flex; justify-content: center; margin-bottom: 30px; }
     .btn-legacy {
@@ -349,6 +346,7 @@
     iframe[src*="tumblr"], iframe[src*="analytics"], iframe[src*="monetization"] { display: none !important; visibility: hidden !important; opacity: 0 !important; width: 0 !important; height: 0 !important; }
     #ga_target, #blue-space-api-calls-iframe, noscript img[style*="position:absolute"] { display: none !important; visibility: hidden !important; opacity: 0 !important; width: 0 !important; height: 0 !important; position: absolute !important; left: -9999px !important; }
 </style>
+
 
 
 
