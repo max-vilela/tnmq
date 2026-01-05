@@ -144,12 +144,13 @@
     
     .view-screen {
         position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-        /* ALTERADO: Padding ajustado para balancear topo/rodapé */
-        padding: 30px 40px 10px 40px; 
+        padding: 30px 50px 20px 40px; 
         display: flex; flex-direction: column;
+        justify-content: space-between; 
         opacity: 0; visibility: hidden; 
         transform: translateX(30px); transition: all 0.4s ease;
         pointer-events: none;
+        box-sizing: border-box; 
     }
 
     #show-menu:checked ~ .modal-pane #screen-menu,
@@ -196,13 +197,16 @@
 
     /* CORREÇÃO DO SCROLL E FLEXBOX */
     .gods-grid-container {
-        flex-grow: 1; /* Ocupa todo o espaço disponível */
+        flex: 1 1 auto; /* Flex-grow 1, Flex-shrink 1 (permite encolher para caber a legenda) */
         overflow-y: auto; 
         overflow-x: hidden;
-        min-height: 0; /* ESSENCIAL PARA O SCROLL FUNCIONAR */
+        min-height: 0; /* CRÍTICO: Permite que o scroll funcione dentro do flexbox */
         margin-bottom: 10px;
         display: flex; flex-direction: column; 
-        padding-right: 5px;
+        
+        /* Adicionei padding-right para afastar do scrollbar/borda */
+        padding-right: 15px; 
+        
         scrollbar-width: thin; 
         scrollbar-color: var(--gold) rgba(0,0,0,0.3);
     }
@@ -236,9 +240,11 @@
         display: flex; justify-content: center; gap: 25px;
         padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);
         font-size: 11px; letter-spacing: 1px; color: rgba(255,255,255,0.8);
-        flex-shrink: 0; /* Garante que a legenda não suma */
+        
+        /* Flex-shrink 0 impede que a legenda seja esmagada se a lista for grande */
+        flex-shrink: 0; 
         font-weight: 600;
-        margin-top: auto; /* Empurra para o rodapé do container */
+        margin-top: auto; 
         min-height: 40px;
     }
     .legend-item { display: flex; align-items: center; gap: 8px; }
@@ -281,3 +287,4 @@
     iframe[src*="tumblr"], iframe[src*="analytics"], iframe[src*="monetization"] { display: none !important; visibility: hidden !important; opacity: 0 !important; width: 0 !important; height: 0 !important; }
     #ga_target, #blue-space-api-calls-iframe, noscript img[style*="position:absolute"] { display: none !important; visibility: hidden !important; opacity: 0 !important; width: 0 !important; height: 0 !important; position: absolute !important; left: -9999px !important; }
 </style>
+
