@@ -344,11 +344,107 @@
     @keyframes emberRise { 0% { transform: translateY(0); opacity: 0; } 20% { opacity: 1; } 100% { transform: translateY(-110vh) translateX(40px); opacity: 0; } }
     @keyframes fadeIn { to { opacity: 1; } }
 
+/* --- GAVETA LATERAL (DRAWER) --- */
+        .toc-drawer {
+            position: fixed;
+            right: -220px; /* Esconde o conteúdo */
+            top: 20%;
+            bottom: 20%;
+            width: 220px;
+            z-index: 1500;
+            transition: right 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .toc-drawer:hover {
+            right: 0; /* Expande ao passar o mouse */
+        }
+
+        /* A ABA / BOTÃO VISÍVEL */
+        .toc-tab {
+            position: absolute;
+            left: -35px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 35px;
+            height: 140px;
+            background: #000;
+            border: 1px solid var(--gold);
+            border-right: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+            border-radius: 4px 0 0 4px;
+        }
+
+        .toc-tab span {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            transform: rotate(180deg);
+            color: var(--gold);
+            font-family: 'Cinzel', serif;
+            font-size: 14px;
+            letter-spacing: 4px;
+            font-weight: 700;
+        }
+
+        /* O CONTEÚDO DA LISTA */
+        .toc-content {
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            border-left: 1px solid var(--gold);
+            padding: 20px 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            text-align: left;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.8);
+            
+            /* Custom Scrollbar */
+            scrollbar-width: thin;
+            scrollbar-color: var(--gold) rgba(255,255,255,0.05);
+        }
+
+        .toc-content::-webkit-scrollbar { width: 3px; }
+        .toc-content::-webkit-scrollbar-thumb { background: var(--gold); }
+
+        /* ESTILO DOS LINKS */
+        .index-link {
+            text-decoration: none;
+            font-family: 'Cinzel', serif;
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.6);
+            letter-spacing: 1px;
+            transition: all 0.2s ease;
+            padding: 3px 0;
+            text-transform: uppercase;
+            display: block;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .index-link:hover {
+            color: #fff;
+            padding-left: 5px;
+            border-left: 2px solid var(--gold);
+            text-shadow: 0 0 5px var(--gold);
+        }
+
+        /* Scroll suave na página */
+        html { scroll-behavior: smooth; }
+        .module { scroll-margin-top: 20px; }
+ 
+
     /* Remover elementos do Tumblr */
     .tmblr-iframe, .tmblr-iframe--controls, .tmblr-iframe--follow { display: none !important; }
     iframe[src*="tumblr"], iframe[src*="analytics"], iframe[src*="monetization"] { display: none !important; visibility: hidden !important; opacity: 0 !important; width: 0 !important; height: 0 !important; }
     #ga_target, #blue-space-api-calls-iframe, noscript img[style*="position:absolute"] { display: none !important; visibility: hidden !important; opacity: 0 !important; width: 0 !important; height: 0 !important; position: absolute !important; left: -9999px !important; }
 </style>
+
 
 
 
