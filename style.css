@@ -437,13 +437,23 @@
         /* Scroll suave na página */
         html { scroll-behavior: smooth; }
         .module { scroll-margin-top: 20px; }
- 
+
+        /* ROLAGEM SUAVE GLOBAL */
+html, body, .main-viewport, .eda-main-stage {
+    scroll-behavior: smooth !important;
+}
+
+/* Garante o respiro do topo para o título não ficar escondido */
+:target {
+    scroll-margin-top: 40px; 
+}
 
     /* Remover elementos do Tumblr */
     .tmblr-iframe, .tmblr-iframe--controls, .tmblr-iframe--follow { display: none !important; }
     iframe[src*="tumblr"], iframe[src*="analytics"], iframe[src*="monetization"] { display: none !important; visibility: hidden !important; opacity: 0 !important; width: 0 !important; height: 0 !important; }
     #ga_target, #blue-space-api-calls-iframe, noscript img[style*="position:absolute"] { display: none !important; visibility: hidden !important; opacity: 0 !important; width: 0 !important; height: 0 !important; position: absolute !important; left: -9999px !important; }
 </style>
+
 
 
 
